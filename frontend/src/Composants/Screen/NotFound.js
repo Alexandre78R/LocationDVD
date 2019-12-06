@@ -1,18 +1,20 @@
 import React from 'react';
 import {
   Container,
-  Row,
+  Alert,
 } from 'reactstrap';
+import NavBar from '../NavBar'
 
 class Home extends React.Component {
 
   render() { 
     return (
         <div>
+          <NavBar/>
           <Container className="page">
-            <Row>
-              <h1>Cette page n'existe pas !</h1>
-            </Row>
+            <Alert color="danger">
+                <h1 className="alert-heading center-message-error-dvd">Cette page n'existe pas !</h1>
+            </Alert>
           </Container>
         </div>
     );
