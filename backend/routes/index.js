@@ -53,8 +53,4 @@ router.post('/dvd/view', function(req, res, next) {
   })
 });
 
-router.post('/dvd/view', function(req, res, next) {
-
-});
-
 module.exports = router;
