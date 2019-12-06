@@ -35,7 +35,7 @@ class NavBar extends React.Component {
             <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="mr-auto" navbar>
                 <NavItem>
-                    <NavLink className="linkNavBar" ><Link className="linkNavBar" to={'/'}>Ajouter une Location DVD</Link></NavLink>
+                    <NavLink className="linkNavBar" ><Link className="linkNavBar" to={'/new-location-dvd'}>Ajouter une Location DVD</Link></NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink className="linkNavBar" href="https://github.com/Alexandre78R/LocationDVD">Code Source (GitHub)</NavLink>

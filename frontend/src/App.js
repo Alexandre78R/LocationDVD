@@ -5,6 +5,7 @@ import './App.css';
 import DocumentTitle from 'react-document-title';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './Composants/Screen/Home';
+import NewsLocationDVD from './Composants/Screen/NewsLocationDVD';
 import NotFound from './Composants/Screen/NotFound';
 
 class App extends React.Component {
@@ -15,6 +16,7 @@ class App extends React.Component {
         <Router>
           <Switch>  
             <Route exact path="/" component={Home}/>
+            <Route exact path="/new-location-dvd" component={NewsLocationDVD}/>
             <Route path="*" component={NotFound} />
           </Switch>
         </Router>
