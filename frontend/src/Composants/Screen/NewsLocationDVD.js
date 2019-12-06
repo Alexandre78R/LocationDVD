@@ -20,20 +20,20 @@ class NewsLocationDVD extends React.Component {
             name : "",
             adresse : "",
             nameFilm : "",
-            startDateLocation: new Date(),
-            startDateLocationEnd: new Date(),
+            dateLocation: new Date(),
+            dateLocationEnd: new Date(),
         };
     }
 
     handleChangeLocation = date => {
         this.setState({
-          startDateLocation: date
+            dateLocation: date
         });
     };
 
     handleChangeLocationEnd = date => {
         this.setState({
-          startDateLocationEnd: date
+            dateLocationEnd: date
         });
     };
 
@@ -68,8 +68,8 @@ class NewsLocationDVD extends React.Component {
             console.log("Nom", this.state.name)
             console.log("Adresse", this.state.adresse)
             console.log("Nom du film", this.state.nameFilm)
-            console.log("Date Location", this.state.startDateLocation)
-            console.log("Date Fin de location", this.state.startDateLocationEnd)
+            console.log("Date Location", this.state.dateLocation)
+            console.log("Date Fin de location", this.state.dateLocationEnd)
             this.setState({
                 openAlert: false,
                 messageError : ""
@@ -102,7 +102,7 @@ class NewsLocationDVD extends React.Component {
                 <FormGroup>
                     <DatePicker
                         dateFormat="dd/MM/yyyy"
-                        selected={this.state.startDateLocation}
+                        selected={this.state.dateLocation}
                         onChange={this.handleChangeLocation}
                     />
                 </FormGroup>
@@ -110,7 +110,7 @@ class NewsLocationDVD extends React.Component {
                 <FormGroup>
                     <DatePicker
                         dateFormat="dd/MM/yyyy"
-                        selected={this.state.startDateLocationEnd}
+                        selected={this.state.dateLocationEnd}
                         onChange={this.handleChangeLocationEnd}
                     />
                 </FormGroup>
