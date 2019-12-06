@@ -4,6 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import './App.css';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from './Composants/Screen/Home';
+import NotFound from './Composants/Screen/NotFound';
 
 class App extends React.Component {
 
@@ -12,6 +13,7 @@ class App extends React.Component {
       <Router>
         <Switch>  
           <Route exact path="/" component={Home}/>
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
     );
