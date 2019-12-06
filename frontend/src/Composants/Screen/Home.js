@@ -42,12 +42,42 @@ class Home extends React.Component {
                     dateLocationEnd : dateFormat(dvd.dateLocationEnd),
                 }
                 })
+
                 console.log("dvdBdd", dvdData)
                 ctx.props.setDVD(dvdData)
                 ctx.setState({
                     stop: true,
                 });
-            } 
+            }else{
+                console.log("Fetch dvds", dvds)
+                
+                var tableau = ctx.props.DVDS
+                tableau.splice(0, tableau.length);
+
+                var dvds = dvds.dvdList;
+
+                var dateFormat = function(date){
+                    var newDate =  new Date(date)
+                    var format = newDate.getDate()+'/'+(newDate.getMonth()+1+"/"+newDate.getFullYear())
+                    return format
+                }
+
+                var dvdData = dvds.map(dvd => {
+                return {
+                    name : dvd.name,
+                    adresse : dvd.adresse,
+                    nameFilm : dvd.nameFilm,
+                    dateLocation : dateFormat(dvd.dateLocation),
+                    dateLocationEnd : dateFormat(dvd.dateLocationEnd),
+                }
+                })
+                
+                console.log("dvdBdd", dvdData)
+                ctx.props.setDVD(dvdData)
+                ctx.setState({
+                    stop: true,
+                });
+            }
         }).catch(function(error) {
           console.log("Fetch error", error);
         });

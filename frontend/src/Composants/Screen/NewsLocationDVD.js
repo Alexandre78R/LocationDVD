@@ -102,18 +102,7 @@ class NewsLocationDVD extends React.Component {
                     return format
                 }
 
-                // var dvds2 = dvds
-
-                // var dvdData = dvds2.map(dvd => {
-                // return {
-                //     name : dvd.name,
-                //     adresse : dvd.adresse,
-                //     nameFilm : dvd.nameFilm,
-                //     dateLocation : dateFormat(dvd.dateLocation),
-                //     dateFin : dateFormat(dvd.dateLocationEnd),
-                // }
-                // })
-                ctx.props.addDVD(dvd.name,dvd.adresse,dvd.nameFilm,dateFormat(dvd.dateLocation),dateFormat(dvd.dateLocationEnd))
+                ctx.props.addDVD(dvd.name, dvd.adresse, dvd.nameFilm, dateFormat(dvd.dateLocation), dateFormat(dvd.dateLocationEnd))
 
                 setTimeout(function() {
                     ctx.setState({
