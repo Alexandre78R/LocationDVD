@@ -32,6 +32,24 @@
   margin-top: 2%;
 }
 
+.titleNavBar{
+  color : #fff;
+}
+
+.titleNavBar :hover{
+  color : #fff;
+  text-decoration : none;
+}
+
+.linkNavBar {
+  color: rgba(255,255,255,.5);
+}
+
+.linkNavBar :hover{
+  color: white;
+  text-decoration : none;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

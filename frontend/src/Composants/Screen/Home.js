@@ -4,12 +4,14 @@ import {
   Row,
   Table,
 } from 'reactstrap';
+import NavBar from '../NavBar'
 
 class Home extends React.Component {
 
   render() { 
     return (
         <div>
+          <NavBar/>
           <Container className="page">
             <Row>
             <Table>
