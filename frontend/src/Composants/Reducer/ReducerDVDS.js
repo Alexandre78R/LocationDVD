@@ -12,6 +12,10 @@ export default function(dvds = [], action){
         }
     
         return DVDContentCopy;
+    }else if(action.type === 'addDVD'){
+        console.log("addDVD", action)
+        DVDContentCopy.push(action)
+        return DVDContentCopy;
     }else{
         return dvds;
     }

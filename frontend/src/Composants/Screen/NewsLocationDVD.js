@@ -10,16 +10,21 @@ import {
   Alert,
 } from 'reactstrap';
 import DatePicker from "react-datepicker";
+import { Redirect } from "react-router-dom";
+import {connect} from 'react-redux';
 
 class NewsLocationDVD extends React.Component {
     constructor() {
         super();
         this.state = {
-            openAlert : false,
+            openAlertRed : false,
+            openAlertBlue : false,
             messageError : "",
+            messageOK : "",
             name : "",
             adresse : "",
             nameFilm : "",
+            redirect : false,
             dateLocation: new Date(),
             dateLocationEnd: new Date(),
         };
@@ -41,27 +46,27 @@ class NewsLocationDVD extends React.Component {
 
         if (this.state.name === ""){
             this.setState({
-                openAlert: true,
+                openAlertRed: true,
                 messageError : "Vous n'avez pas rempli le champ du nom !"
             });
         }else if(this.state.name.length < 4){
             this.setState({
-                openAlert: true,
+                openAlertRed: true,
                 messageError : "Vous devez écrire minimun 4 caractère pour le champ du nom !"
             });
         }else if(this.state.adresse === ""){
             this.setState({
-                openAlert: true,
+                openAlertRed: true,
                 messageError : "Vous n'avez pas rempli le champ de l'adresse !"
             });
         }else if(this.state.adresse.length < 4){
             this.setState({
-                openAlert: true,
+                openAlertRed: true,
                 messageError : "Vous devez écrire minimun 4 caractère pour le champ de l'adresse !"
             });
         }else if(this.state.nameFilm === ""){
             this.setState({
-                openAlert: true,
+                openAlertRed: true,
                 messageError : "Vous n'avez pas rempli le champ du nom du film !"
             });
         }else{
@@ -70,20 +75,80 @@ class NewsLocationDVD extends React.Component {
             console.log("Nom du film", this.state.nameFilm)
             console.log("Date Location", this.state.dateLocation)
             console.log("Date Fin de location", this.state.dateLocationEnd)
-            this.setState({
-                openAlert: false,
-                messageError : ""
+
+            var dvd = {
+                name: this.state.name,
+                adresse: this.state.adresse,
+                nameFilm: this.state.nameFilm,
+                dateLocation : this.state.dateLocation,
+                dateLocationEnd : this.state.dateLocationEnd,
+              }
+            var ctx = this;
+            fetch('https://locationdvdbackend.herokuapp.com/dvd/add', {method : "POST", headers : { "Content-Type": "application/json" }, body : JSON.stringify(dvd)})
+            .then(function(response){
+              return response.json();
+            }).then(function(dvds) {
+                console.log("dvds", dvds.dvd)
+                ctx.setState({
+                    openAlertRed: false,
+                    openAlertBlue : true,
+                    messageError : "",
+                    messageOK : "Chargement en cours...",
+                });
+
+                var dateFormat = function(date){
+                    var newDate =  new Date(date)
+                    var format = newDate.getDate()+'/'+(newDate.getMonth()+1+"/"+newDate.getFullYear())
+                    return format
+                }
+
+                // var dvds2 = dvds
+
+                // var dvdData = dvds2.map(dvd => {
+                // return {
+                //     name : dvd.name,
+                //     adresse : dvd.adresse,
+                //     nameFilm : dvd.nameFilm,
+                //     dateLocation : dateFormat(dvd.dateLocation),
+                //     dateFin : dateFormat(dvd.dateLocationEnd),
+                // }
+                // })
+                ctx.props.addDVD(dvd.name,dvd.adresse,dvd.nameFilm,dateFormat(dvd.dateLocation),dateFormat(dvd.dateLocationEnd))
+
+                setTimeout(function() {
+                    ctx.setState({
+                        openAlertRed: false,
+                        openAlertBlue : false,
+                        messageError : "",
+                        messageOK : "",
+                        redirect : true,
+                    });
+                }, 5000);  
+            }).catch(function(error) {
+                console.log("Fetch error", error);
+                ctx.setState({
+                    openAlertRed: true,
+                    openAlertBlue : false,
+                    messageError : "Désolé notre serveur ne répond pas..."
+                });
             });
         }
     }
 
   render() {   
+    const { redirect } = this.state;
+    if (redirect === true) {
+      return <Redirect to='/'/>;
+    }
     return (
         <div>
           <NavBar/>
           <Container className="page">
-            <Alert color="danger" isOpen={this.state.openAlert}>
+            <Alert color="danger" isOpen={this.state.openAlertRed}>
                 {this.state.messageError}
+            </Alert>
+            <Alert color="info" isOpen={this.state.openAlertBlue}>
+                {this.state.messageOK}
             </Alert>
             <Form>
                 <FormGroup>
@@ -122,4 +187,19 @@ class NewsLocationDVD extends React.Component {
   }
 }
 
-export default NewsLocationDVD;
+function mapDispatchToProps(dispatch) {
+    return {
+        addDVD(name, adresse, nameFilm, dateLocation, dateLocationEnd) { 
+            dispatch({
+            type: 'addDVD',
+            name : name,
+            adresse : adresse,
+            nameFilm : nameFilm,
+            dateLocation : dateLocation,
+            dateLocationEnd : dateLocationEnd,
+            }) 
+        },
+    }
+}
+
+export default connect(null, mapDispatchToProps)(NewsLocationDVD);

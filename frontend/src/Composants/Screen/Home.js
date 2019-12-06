@@ -39,7 +39,7 @@ class Home extends React.Component {
                     adresse : dvd.adresse,
                     nameFilm : dvd.nameFilm,
                     dateLocation : dateFormat(dvd.dateLocation),
-                    dateFin : dateFormat(dvd.dateLocationEnd),
+                    dateLocationEnd : dateFormat(dvd.dateLocationEnd),
                 }
                 })
                 console.log("dvdBdd", dvdData)
@@ -62,7 +62,7 @@ class Home extends React.Component {
                 <td>{message.adresse}</td>
                 <td>{message.nameFilm}</td>
                 <td>{message.dateLocation}</td>   
-                <td>{message.dateFin}</td>      
+                <td>{message.dateLocationEnd}</td>      
               </tr>
           )
         }
@@ -125,4 +125,5 @@ function mapDispatchToProps(dispatch) {
         },
     }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
