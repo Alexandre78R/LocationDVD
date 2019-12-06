@@ -17,7 +17,6 @@ import DVDS from './Composants/Reducer/ReducerDVDS';
 
 const store = createStore(combineReducers({DVDS}));
 
-
 class App extends React.Component {
 
   render() {

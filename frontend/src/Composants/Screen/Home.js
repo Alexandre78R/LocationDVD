@@ -6,38 +6,58 @@ import {
   Alert,
 } from 'reactstrap';
 import NavBar from '../NavBar'
+import {connect} from 'react-redux';
 
 class Home extends React.Component {
     constructor() {
         super();
         this.state = {
           dvdData : [ 
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", Adresse : "Adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
+            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
          ],
         };
     }
 
+    componentWillMount = () => {
+
+        var dvds = this.state.dvdData;
+
+        var dvdData = dvds.map(dvd => {
+        return {
+        name : dvd.name,
+        adresse : dvd.adresse,
+        nameFilm : dvd.nameFilm,
+        dateLocation : dvd.dateLocation,
+        dateFin : dvd.dateFin,
+        }
+        })
+        console.log("dvdBdd", dvdData)
+
+        this.props.setDVD(dvdData)
+
+    }
+
   render() { 
-    var dvdData = this.state.dvdData.map(
+    var dvdData = this.props.DVDS.map(
         (message, i) => {
           return (
               <tr key={i}>
                 <td>{message.name}</td>
-                <td>{message.Adresse}</td>
+                <td>{message.adresse}</td>
                 <td>{message.nameFilm}</td>
                 <td>{message.dateLocation}</td>   
                 <td>{message.dateFin}</td>      
@@ -62,7 +82,7 @@ class Home extends React.Component {
                   <thead>
                     <tr>
                       <th>Nom</th>
-                      <th>Adresse</th>
+                      <th>adresse</th>
                       <th>Nom du film</th>
                       <th>Date Location</th>
                       <th>Date Fin</th>
@@ -85,4 +105,22 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+function mapStateToProps(state) {
+    // console.log("DVDs::::",state.Messages) 
+    console.log("state", state)
+    return ({
+    DVDS: state.DVDS,
+    })
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        setDVD(dvds) { 
+            dispatch({
+            type: 'setDVD',
+            dvds : dvds,
+            }) 
+        },
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
