@@ -7,6 +7,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+/* GET home page. */
+router.get('/test', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 router.post('/dvd/add', function(req, res, next) {
 
   console.log("req", req.body)
@@ -32,7 +37,7 @@ router.post('/dvd/add', function(req, res, next) {
         "code" : 200,
       })       
     }
-  })
+  })   
 });
 
 router.post('/dvd/view', function(req, res, next) {
@@ -52,5 +57,6 @@ router.post('/dvd/view', function(req, res, next) {
     });
   })
 });
+
 
 module.exports = router;

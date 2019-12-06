@@ -12,43 +12,45 @@ class Home extends React.Component {
     constructor() {
         super();
         this.state = {
-          dvdData : [ 
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-            {name : "Nom", adresse : "adresse", nameFilm : "Nom du film", dateLocation : "jj/mm/yyyy", dateFin : "jj/mm/yyyy"},
-         ],
+          dvdData : [],
         };
     }
 
     componentWillMount = () => {
+        var ctx = this;
+        fetch('https://locationdvdbackend.herokuapp.com/dvd/view', {method : "POST", headers : { "Content-Type": "application/json" }})
+        .then(function(response){
+          return response.json();
+        }).then(function(dvds) {
+            console.log("props redux", ctx.props.DVDS)
+            if (ctx.props.DVDS.length === 0){
+                console.log("Fetch dvds", dvds)
+                var dvds = dvds.dvdList;
 
-        var dvds = this.state.dvdData;
+                var dateFormat = function(date){
+                    var newDate =  new Date(date)
+                    var format = newDate.getDate()+'/'+(newDate.getMonth()+1+"/"+newDate.getFullYear())
+                    return format
+                }
 
-        var dvdData = dvds.map(dvd => {
-        return {
-        name : dvd.name,
-        adresse : dvd.adresse,
-        nameFilm : dvd.nameFilm,
-        dateLocation : dvd.dateLocation,
-        dateFin : dvd.dateFin,
-        }
-        })
-        console.log("dvdBdd", dvdData)
-
-        this.props.setDVD(dvdData)
-
+                var dvdData = dvds.map(dvd => {
+                return {
+                    name : dvd.name,
+                    adresse : dvd.adresse,
+                    nameFilm : dvd.nameFilm,
+                    dateLocation : dateFormat(dvd.dateLocation),
+                    dateFin : dateFormat(dvd.dateLocationEnd),
+                }
+                })
+                console.log("dvdBdd", dvdData)
+                ctx.props.setDVD(dvdData)
+                ctx.setState({
+                    stop: true,
+                });
+            } 
+        }).catch(function(error) {
+          console.log("Fetch error", error);
+        });
     }
 
   render() { 
